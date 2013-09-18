@@ -5,10 +5,10 @@ def setup
 end
 
 def draw
-  img = load_image("/Users/jakedahn/Desktop/projects/rp/bg.jpg")
+  img = load_image("#{File.expand_path(File.dirname(__FILE__))}/bg.jpg")
   background(img);  
 
-  g = Grid.new(3, width, height)
+  g = Grid.new(10, width, height)
   g.draw_intersections
 
 end
@@ -82,29 +82,26 @@ class Grid
     gather_verticies
 
     @verticies.each do |point|
-      d = Dot.new(point[:x], point[:y])
-      d.draw
+      b = Box.new(point[:x], point[:y], @grid_size)
+      b.draw
     end
   end
 
 end
 
-class Dot
+class Box
   attr_accessor :x, :y, :opacity
-  def initialize(x, y)
+  def initialize(x, y, size)
     @x = x
     @y = y
+    @size = size
     @opacity = 100
   end
 
   def draw
-    stroke(255, 255, 255, random(100))
-    ellipse(x, y, 1, 1)
-  end
-
-  def update
-    stroke(255, 255, 255, random(100))
-    ellipse(x, y, 1, 1)
+    fill(255, 255, 255, random(100))
+    stroke(255, 255, 255, 10)
+    rect(x, y, @size, @size)
   end
 
 end
